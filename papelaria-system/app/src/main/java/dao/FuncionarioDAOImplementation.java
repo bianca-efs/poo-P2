@@ -22,16 +22,10 @@ public class FuncionarioDAOImplementation implements FuncionarioDAO {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver carregado...");
-
             con = DriverManager.getConnection(DB_URI, DB_USER, DB_PASS);
-            System.out.println("Conectado no MySQL...");
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Erro ao carregar driver");
+        } catch (ClassNotFoundException e) { 
             e.printStackTrace();
-
         } catch (SQLException e) {
-            System.out.println("Erro ao conectar no banco");
             e.printStackTrace();
         }
     }
@@ -75,7 +69,6 @@ public class FuncionarioDAOImplementation implements FuncionarioDAO {
     public void atualizar(int id, Funcionario f) {
         try {
             String sql = "UPDATE funcionario SET nome=?, cpf=?, salario=?, email=?, cargo=?, setor=?, data_contrato=? WHERE id=?";
-
             PreparedStatement stm = con.prepareStatement(sql);
 
             stm.setString(1, f.getNome());
@@ -86,20 +79,16 @@ public class FuncionarioDAOImplementation implements FuncionarioDAO {
             stm.setString(6, f.getSetor());
             stm.setDate(7, java.sql.Date.valueOf(f.getDataContrato()));
             stm.setInt(8, id);
-
             stm.executeUpdate();
-
-            System.out.println("Funcionário atualizado");
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public List<Funcionario> pesquisarPorCPF(String cpf) {
-
+    public List<Funcionario> pesquisar(String cpf) {
         List<Funcionario> lista = new ArrayList<>();
-
         try {
             String sql = "SELECT * FROM funcionario WHERE cpf LIKE ?";
             PreparedStatement stm = con.prepareStatement(sql);
@@ -115,15 +104,14 @@ public class FuncionarioDAOImplementation implements FuncionarioDAO {
                 f.setEmail(rs.getString("email"));
                 f.setCargo(rs.getString("cargo"));
                 f.setSetor(rs.getString("setor"));
-
-                LocalDate data = rs.getDate("data_contrato").toLocalDate();
-                f.setDataContrato(data);
-
+                f.setDataContrato(rs.getDate("data_contrato").toLocalDate());
                 lista.add(f);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return lista;
     }
 }

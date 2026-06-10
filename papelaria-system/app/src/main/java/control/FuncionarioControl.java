@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import dao.FuncionarioDAO;
 import dao.FuncionarioDAOImplementation;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import entity.Funcionario;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -80,8 +81,8 @@ public class FuncionarioControl {
 		    return;
 		}
 
-		else if (cpf.get().isEmpty()) {
-			mostrarErro("É necessário preencher o CPF");
+		else if (cpf.get().isEmpty() || cpf.get().length() != 11) {
+			mostrarErro("É necessário preencher um CPF de 11 digitos");
 
 		    return;
 		}
@@ -92,8 +93,8 @@ public class FuncionarioControl {
 		    return;
 		} 
 		
-		else if (email.get().isEmpty()) {
-			mostrarErro("É necessário preencher o e-mail");
+		else if (email.get().isEmpty() || !email.get().contains("@")) {
+			mostrarErro("É necessário preencher um e-mail válido");
 
 		    return;
 		} 
@@ -116,6 +117,7 @@ public class FuncionarioControl {
 			} else {
 				dao.cadastrar(f);
 			}
+			new Alert(AlertType.INFORMATION, "Funcionário gravado no sistema!").show();
 		}
 		
 		limparCampos();
@@ -123,8 +125,8 @@ public class FuncionarioControl {
 	}
 	
 	public void carregar() {
-		lista.clear();
-		lista.addAll(dao.pesquisarPorCPF(""));
+	    lista.clear();
+	    lista.addAll(dao.pesquisar(""));
 	}
 	
 	public void apagar(Funcionario f) {
@@ -134,11 +136,7 @@ public class FuncionarioControl {
 
 	public void pesquisar() {
 	    lista.clear();
-	    if (cpf.get().isEmpty()) {
-	        carregar();
-	    } else {
-	        lista.addAll(dao.pesquisarPorCPF(cpf.get()));
-	    }
+	    lista.addAll(dao.pesquisar(cpf.get()));
 	}
     
     public String getCPF() {

@@ -8,9 +8,8 @@ public class PrincipalBoundary extends Application {
 
     @Override
     public void start(Stage stage) {
-        FuncionarioBoundary fb = new FuncionarioBoundary();
+        FuncionarioBoundary fb = new FuncionarioBoundary(stage);
         Scene scene = new Scene(fb.render(), 900, 600);
-
         stage.setScene(scene);
         stage.setTitle("Sistema Papelaria");
         stage.show();

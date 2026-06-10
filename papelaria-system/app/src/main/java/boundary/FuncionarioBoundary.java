@@ -30,9 +30,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import javafx.scene.image.ImageView;
+import javafx.scene.Scene;
 
 public class FuncionarioBoundary implements Tela{
 
@@ -48,11 +51,19 @@ public class FuncionarioBoundary implements Tela{
 	private TextField txtEmail = new TextField();
     private DatePicker pDataContrato = new DatePicker();
 	private ComboBox<String> cmbSetor = new ComboBox<>();
-
+	private Stage stage;
+	
+	public FuncionarioBoundary(Stage stage) {
+	    this.stage = stage;
+	}
+	
 	@Override
 	public Pane render() {
 		BorderPane panPrincipal = new BorderPane();
         GridPane paneCampos = new GridPane();
+        paneCampos.setHgap(10); 
+        paneCampos.setVgap(10); 
+        paneCampos.setPadding(new javafx.geometry.Insets(10));
         cmbSetor.setItems(setores);
         
         paneCampos.add(new Label("Nome:"), 0, 0);
@@ -76,23 +87,32 @@ public class FuncionarioBoundary implements Tela{
         Button btnSalvar = new Button("Salvar");
         btnSalvar.setOnAction((e) -> {
         	control.salvar();
-        	new Alert(AlertType.INFORMATION, "Funcionário gravado no sistema!").show();
         });
         Button btnPesquisar = new Button("Pesquisar");
         btnPesquisar.setOnAction((e) -> {
             control.pesquisar();
         });
-        Button btnApagar = new Button("Apagar");
+        Button btnApagar = new Button("Limpar Campos");
         btnApagar.setOnAction((e) -> {
         	control.limparCampos();
         });
+        Button btnVoltar = new Button("Menu");
+        btnVoltar.setOnAction(e -> {
+            MenuBoundary menu = new MenuBoundary(stage);
+            stage.setScene(new Scene(menu.render(), 900, 600));
+        });
+        
+        Image iconEdit = new Image(getClass().getResourceAsStream("/images/casa.png"));
+        ImageView imgViewMenu = new ImageView(iconEdit);
+        imgViewMenu.setFitWidth(25);
+        imgViewMenu.setFitHeight(25);
+        btnVoltar.setGraphic(imgViewMenu);
         
         paneCampos.add(btnApagar, 0, 7);
-        paneCampos.add(btnSalvar, 1, 7);
-        paneCampos.add(btnPesquisar, 2, 7);
-        
-        StringConverter<? extends LocalDate> cvt = new LocalDateStringConverter();
-        
+        paneCampos.add(btnSalvar, 2, 0);
+        paneCampos.add(btnPesquisar, 2, 1);
+        paneCampos.add(btnVoltar, 23, 0);
+                
         Bindings.bindBidirectional(txtCPF.textProperty(), control.cpfProperty());
         Bindings.bindBidirectional(txtNome.textProperty(), control.nomeProperty());
         Bindings.bindBidirectional(txtSalario.textProperty(), control.salarioProperty(), new NumberStringConverter());
@@ -121,14 +141,16 @@ public class FuncionarioBoundary implements Tela{
         TableColumn<Funcionario, Void> colAcoes = new TableColumn<>("Ações");
         
         table.getSelectionModel().selectedItemProperty().addListener((obj, antigo, novo) -> control.fromEntity(novo));
-        table.getColumns().add( colId );
-        table.getColumns().add( colCPF );
-        table.getColumns().add( colNome );
-        table.getColumns().add( colSalario );
-        table.getColumns().add( colEmail );
-        table.getColumns().add( colCargo );
-        table.getColumns().add( colSetor );
-        table.getColumns().add( colDataContrato );
+        table.getColumns().add(colId);
+        table.getColumns().add(colCPF);
+        table.getColumns().add(colNome);
+        table.getColumns().add(colSalario);
+        table.getColumns().add(colEmail);
+        table.getColumns().add(colCargo);
+        table.getColumns().add(colSetor);
+        table.getColumns().add(colDataContrato);
+        
+        table.getColumns().add(colAcoes);
         
         table.setItems(control.getLista());
         
@@ -154,17 +176,43 @@ public class FuncionarioBoundary implements Tela{
                             });
                         }
                         
-                        public void updateItem(Void parm, boolean empty) {    
-                            if (!empty) {
-                                setGraphic(btnApagar);
-                            } else {
+                        
+                        Button btnEditar = new Button();
+
+                        {
+                            Image iconEdit = new Image(getClass().getResourceAsStream("/images/editar.png"));
+                            ImageView imgViewEdit = new ImageView(iconEdit);
+                            imgViewEdit.setFitWidth(25);
+                            imgViewEdit.setFitHeight(25);
+                            btnEditar.setGraphic(imgViewEdit);
+                            btnEditar.setOnAction(e -> {
+                            	 Funcionario fSelecionado = getTableView().getItems().get(getIndex());
+                            	    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            	    alert.setTitle("Confirmação de edição");
+                            	    alert.setHeaderText(null);
+                            	    alert.setContentText("Deseja salvar as alterações deste funcionário?");
+                            	    Optional<ButtonType> result = alert.showAndWait();
+                            	    if (result.isPresent() && result.get() == ButtonType.OK) {
+                            	        control.salvar();
+                            	    }
+                            });
+                        }
+                        
+                        @Override
+                        public void updateItem(Void item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty) {
                                 setGraphic(null);
+                            } else {
+                                HBox box = new HBox(5);
+                                box.getChildren().addAll(btnEditar, btnApagar);
+                                setGraphic(box);
                             }
                         }
                     };
                 }
         };
-
+        
         colAcoes.setCellFactory(callback);
         return panPrincipal;
     }
