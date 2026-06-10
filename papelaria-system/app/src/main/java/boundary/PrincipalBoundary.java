@@ -1,4 +1,4 @@
-package boundary;
+/*package boundary;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -19,3 +19,4 @@ public class PrincipalBoundary extends Application {
         launch(args);
     }
 }
+*/

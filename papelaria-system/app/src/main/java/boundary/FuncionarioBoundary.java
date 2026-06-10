@@ -9,7 +9,8 @@ import control.FuncionarioControl;
 import entity.Funcionario;
 
 import javafx.util.converter.NumberStringConverter;
-import java.time.LocalDate;
+
+import java.sql.SQLException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -19,7 +20,6 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -33,7 +33,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.converter.LocalDateStringConverter;
 import javafx.scene.image.ImageView;
 import javafx.scene.Scene;
 
@@ -86,11 +85,21 @@ public class FuncionarioBoundary implements Tela{
         
         Button btnSalvar = new Button("Salvar");
         btnSalvar.setOnAction((e) -> {
-        	control.salvar();
+        	try {
+				control.salvar();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         });
         Button btnPesquisar = new Button("Pesquisar");
         btnPesquisar.setOnAction((e) -> {
-            control.pesquisar();
+            try {
+				control.pesquisar();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
         });
         Button btnApagar = new Button("Limpar Campos");
         btnApagar.setOnAction((e) -> {
@@ -171,7 +180,12 @@ public class FuncionarioBoundary implements Tela{
                                 Alert alert = new Alert(AlertType.CONFIRMATION, "Deletar Funcionário?", ButtonType.YES, ButtonType.NO);
                                 Optional<ButtonType> result = alert.showAndWait();
                                 if (result.isPresent() && result.get() == ButtonType.YES) {
-                                    control.apagar(f);
+                                    try {
+										control.apagar(f);
+									} catch (SQLException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
                                 }
                             });
                         }
@@ -193,7 +207,12 @@ public class FuncionarioBoundary implements Tela{
                             	    alert.setContentText("Deseja salvar as alterações deste funcionário?");
                             	    Optional<ButtonType> result = alert.showAndWait();
                             	    if (result.isPresent() && result.get() == ButtonType.OK) {
-                            	        control.salvar();
+                            	        try {
+											control.salvar();
+										} catch (SQLException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
                             	    }
                             });
                         }

@@ -27,6 +27,11 @@ public class MenuBoundary implements Tela{
             FuncionarioBoundary fb = new FuncionarioBoundary(stage);
             stage.setScene(new Scene(fb.render(), 900, 600));
         });
+        
+        btnCliente.setOnAction(e -> {
+            ClienteBoundary cb = new ClienteBoundary(stage);
+            stage.setScene(new Scene(cb.render(), 900, 600));
+        });
 
         grid.add(btnFuncionario, 0, 0);
         grid.add(btnProduto, 1, 0);

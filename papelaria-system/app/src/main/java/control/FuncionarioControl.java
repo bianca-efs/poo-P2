@@ -1,5 +1,6 @@
 package control;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import dao.FuncionarioDAO;
@@ -34,7 +35,11 @@ public class FuncionarioControl {
 	private FuncionarioDAO dao = new FuncionarioDAOImplementation();
 	
 	public FuncionarioControl() { 
-        carregar();
+        try {
+			carregar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void fromEntity (Funcionario f) {
@@ -74,43 +79,26 @@ public class FuncionarioControl {
 		email.set("");
 	}
 	
-	public void salvar() {
+	public void salvar() throws SQLException {
 		if (nome.get().isEmpty()) {
-			mostrarErro("É necessário preencher o nome");
-
-		    return;
-		}
-
-		else if (cpf.get().isEmpty() || cpf.get().length() != 11) {
+			mostrarErro("É necessário preencher o nome");		    
+			return;
+		} else if (cpf.get().isEmpty() || cpf.get().length() != 11) {
 			mostrarErro("É necessário preencher um CPF de 11 digitos");
-
 		    return;
-		}
-
-		else if (salario.get() <= 0) {
+		}else if (salario.get() <= 0) {
 			mostrarErro("É necessário que o salário seja maior que 0");
-
 		    return;
-		} 
-		
-		else if (email.get().isEmpty() || !email.get().contains("@")) {
+		} else if (email.get().isEmpty() || !email.get().contains("@")) {
 			mostrarErro("É necessário preencher um e-mail válido");
-
 		    return;
-		} 
-		
-		else if (cargo.get().isEmpty()) {
+		} else if (cargo.get().isEmpty()) {
 			mostrarErro("É necessário preencher o cargo");
-
 		    return;
-		} 
-		
-		else if (setor.get().isEmpty()) {
+		} else if (setor.get().isEmpty()) {
 			mostrarErro("É necessário preencher o setor");
 		    return;
-		} 
-		
-		else {
+		} else {
 			Funcionario f = toEntity();
 			if (id.get() > 0) {
 				dao.atualizar(id.get(), f);			
@@ -124,24 +112,20 @@ public class FuncionarioControl {
 		carregar();
 	}
 	
-	public void carregar() {
+	public void carregar() throws SQLException {
 	    lista.clear();
 	    lista.addAll(dao.pesquisar(""));
 	}
 	
-	public void apagar(Funcionario f) {
+	public void apagar(Funcionario f) throws SQLException {
 	    dao.apagar(f);
 	    carregar();
 	}
 
-	public void pesquisar() {
+	public void pesquisar() throws SQLException {
 	    lista.clear();
 	    lista.addAll(dao.pesquisar(cpf.get()));
 	}
-    
-    public String getCPF() {
-        return cpf.get();
-    }
 
     public StringProperty cpfProperty() {
         return cpf;
