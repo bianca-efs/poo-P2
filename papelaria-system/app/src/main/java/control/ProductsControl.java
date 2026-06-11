@@ -1,7 +1,6 @@
-/*package control;
+package control;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 import dao.ProductsDAO;
 import dao.ProductsDAOImplementation;
@@ -49,11 +48,11 @@ public class ProductsControl {
     public Products toEntity() {
         Products p = new Products();
 
-        p.setId(id.getId());
-        p.setName(name.getName());
-        p.setPrice(price.getPrice());
-        p.setQuantity(quantity.getQuantity());
-        p.setSku(sku.getSku());
+        p.setId(id.get());
+        p.setName(name.get());
+        p.setPrice(price.get());
+        p.setQuantity(quantity.get());
+        p.setSku(sku.get());
         return p;
     }
 
@@ -134,4 +133,4 @@ public class ProductsControl {
     public ObservableList<Products> getLista() {
         return l;
     }
-}*/
+}

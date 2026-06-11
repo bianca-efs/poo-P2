@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.Fornecedor;
-import entity.Funcionario;
 
 public class FornecedorDAOImplementation implements FornecedorDAO{
 	private static final String DB_URI = "jdbc:mysql://localhost:3306/papelaria?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
