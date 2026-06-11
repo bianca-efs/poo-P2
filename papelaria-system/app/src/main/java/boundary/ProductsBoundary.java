@@ -37,6 +37,8 @@ public class ProductsBoundary implements Tela {
     private TextField txtPrice = new TextField();
     private TextField txtQuantity = new TextField();
     private TextField txtSku = new TextField();
+    private TextField txtDescription = new TextField();
+    private TextField txtCategoria = new TextField();
 
     public ProductsBoundary(Stage stage) {
         this.stage = stage;
@@ -51,14 +53,18 @@ public class ProductsBoundary implements Tela {
         gap.setVgap(20);
         gap.setPadding(new javafx.geometry.Insets(10));
 
-        gap.add(new Label("Nome"), 0, 0);
-        gap.add(txtName, 1, 0);
-        gap.add(new Label("Preço"), 0, 1);
-        gap.add(txtPrice, 1, 1);
-        gap.add(new Label("Quantidade"), 0, 2);
-        gap.add(txtQuantity, 1, 2);
-        gap.add(new Label("SKU"), 0, 3);
-        gap.add(txtSku, 1, 3);
+        gap.add(new Label("SKU"), 0, 0);
+        gap.add(txtSku, 01, 0);
+        gap.add(new Label("Nome"), 0, 1);
+        gap.add(txtName, 1, 1);
+        gap.add(new Label("Preço"), 0, 2);
+        gap.add(txtPrice, 1, 2);
+        gap.add(new Label("Quantidade"), 0, 3);
+        gap.add(txtQuantity, 1, 3);
+        gap.add(new Label("Descrição"), 0, 4);
+        gap.add(txtDescription, 1, 4);
+        gap.add(new Label("Categoria"), 0 ,5);
+        gap.add(txtCategoria, 1,5);
 
         principal.setTop(gap);
         principal.setCenter(table);
@@ -104,6 +110,8 @@ public class ProductsBoundary implements Tela {
         Bindings.bindBidirectional(txtPrice.textProperty(), c.priceProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(txtQuantity.textProperty(), c.quantityProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(txtSku.textProperty(), c.skuProperty());
+        Bindings.bindBidirectional(txtDescription.textProperty(), c.descriptionProperty());
+        Bindings.bindBidirectional(txtCategoria.textProperty(), c.categoriaProperty());
 
         TableColumn<Products, String> colId = new TableColumn<>("ID");
         colId.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(String.valueOf(itemData.getValue().getId())));
@@ -118,6 +126,14 @@ public class ProductsBoundary implements Tela {
         TableColumn<Products, String> colSku = new TableColumn<>("SKU");
         colSku.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getSku()));
 
+        TableColumn<Products, String> colDescription = new TableColumn<>("Descriçao");
+        colDescription.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDescription()));
+
+        TableColumn<Products, String> colCategoria = new TableColumn<>("Categoria");
+        colCategoria.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getCategoria()));
+
+
+
         TableColumn<Products, Void> colAction = new TableColumn<>("Açoes");
 
         table.getSelectionModel().selectedItemProperty().addListener((obj, anttigo, novo) -> c.fromEntity(novo));
@@ -126,6 +142,8 @@ public class ProductsBoundary implements Tela {
         table.getColumns().add(colPrice);
         table.getColumns().add(colQuantity);
         table.getColumns().add(colSku);
+        table.getColumns().add(colDescription);
+        table.getColumns().add(colCategoria);
 
         table.getColumns().add(colAction);
 

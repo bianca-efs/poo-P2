@@ -24,6 +24,8 @@ public class ProductsControl {
     private DoubleProperty price = new SimpleDoubleProperty(0);
     private IntegerProperty quantity = new SimpleIntegerProperty(0);
     private StringProperty sku = new SimpleStringProperty("");
+    private StringProperty description = new SimpleStringProperty("");
+    private StringProperty categoria = new SimpleStringProperty("");
 
     private ProductsDAO prodao = new ProductsDAOImplementation();
 
@@ -42,6 +44,8 @@ public class ProductsControl {
             price.set(p.getPrice());
             quantity.set(p.getQuantity());
             sku.set(p.getSku());
+            description.set(p.getDescription());
+            categoria.set(p.getCategoria());
         }
     }
 
@@ -53,6 +57,9 @@ public class ProductsControl {
         p.setPrice(price.get());
         p.setQuantity(quantity.get());
         p.setSku(sku.get());
+        p.setDescription(description.get());
+        p.setCategoria(categoria.get());
+
         return p;
     }
 
@@ -72,6 +79,14 @@ public class ProductsControl {
         return sku;
     }
 
+    public StringProperty descriptionProperty() {
+        return description;
+    }
+
+    public StringProperty categoriaProperty(){
+        return categoria;
+    }
+
     public void salvar() throws SQLException {
         if (name.get().isEmpty()) {
             mostrarErro("Coloque o nome");
@@ -85,7 +100,11 @@ public class ProductsControl {
         } else if (sku.get().isEmpty()) {
             mostrarErro("É necessário preencher o sku");
             return;
-        } else {
+        } else if (description.get().isEmpty()) {
+            mostrarErro("É necessario colocar a Descriçao");
+        } else if (categoria.get().isEmpty()) {
+            mostrarErro("É necessario colocar a Categoria do Produto");
+        }else {
             Products p = toEntity();
             if (id.get() > 0) {
                 prodao.atualizar(id.get(), p);
@@ -105,6 +124,8 @@ public class ProductsControl {
         price.set(0);
         quantity.set(0);
         sku.set("");
+        description.set("");
+        categoria.set("");
     }
 
     public void carregar() throws SQLException {

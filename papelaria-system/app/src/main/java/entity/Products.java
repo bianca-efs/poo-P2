@@ -6,6 +6,8 @@ public class Products {
     private double price;
     private int quantity;
     private String sku;
+    private String description;
+    private String categoria;
 
     public int getId() {
         return id;
@@ -45,5 +47,21 @@ public class Products {
 
     public void setSku(String sku) {
         this.sku = sku;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

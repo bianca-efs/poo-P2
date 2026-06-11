@@ -27,13 +27,16 @@ public class ProductsDAOImplementation implements ProductsDAO {
 
     @Override
     public void cadastrar(Products p) throws SQLException {
-        String sql = "INSERT INTO products (name, price, quantity, sku) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO products (sku, name, price, quantity, description, categoria) VALUES (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement stm = con.prepareStatement(sql);
-        stm.setString(1, p.getName());
-        stm.setDouble(2, p.getPrice());
-        stm.setInt(3, p.getQuantity());
-        stm.setString(4, p.getSku());
+        
+        stm.setString(1, p.getSku());
+        stm.setString(2, p.getName());
+        stm.setDouble(3, p.getPrice());
+        stm.setInt(4, p.getQuantity());
+        stm.setString(5, p.getDescription());
+        stm.setString(6, p.getCategoria());
 
         stm.executeUpdate();
     }
@@ -50,14 +53,18 @@ public class ProductsDAOImplementation implements ProductsDAO {
 
     @Override
     public void atualizar(int id, Products p) throws SQLException {
-        String sql = "UPDATE products SET name = ?, price = ?, quantity = ?, sku = ? WHERE id = ?";
+        String sql = "UPDATE products SET sku = ?, name = ?, price = ?, quantity = ?, description=?, categoria=? WHERE id = ?";
 
         PreparedStatement stm = con.prepareStatement(sql);
-        stm.setString(1, p.getName());
-        stm.setDouble(2, p.getPrice());
-        stm.setInt(3, p.getQuantity());
-        stm.setString(4, p.getSku());
-        stm.setInt(5, id);
+        
+        stm.setString(1, p.getSku());
+        stm.setString(2, p.getName());
+        stm.setDouble(3, p.getPrice());
+        stm.setInt(4, p.getQuantity());
+        stm.setString(5, p.getDescription());
+        stm.setString(6, p.getCategoria());
+        
+        stm.setInt(7, id);
 
         stm.executeUpdate();
     }
@@ -83,6 +90,8 @@ public class ProductsDAOImplementation implements ProductsDAO {
                 p.setPrice(rs.getDouble("price"));
                 p.setQuantity(rs.getInt("quantity"));
                 p.setSku(rs.getString("sku"));
+                p.setDescription(rs.getString("description"));
+                p.setCategoria(rs.getString("categoria"));
 
                 lista.add(p);
             }
