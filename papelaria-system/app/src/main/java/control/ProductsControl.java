@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import dao.ProductsDAO;
 import dao.ProductsDAOImplementation;
+import entity.Funcionario;
 import entity.Products;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -37,8 +38,21 @@ public class ProductsControl {
     public void fromEntity (Products p){
         if(p != null){
             id.set(p.getId());
-            nome.set(p..getName());
-            
+            name.set(p.getName());
+            price.set(p.getPrice());
+            quantity.set(p.getQuantity());
+            sku.set(p.getSku());
         }
+    }
+
+    public Products toEntity (){
+        Products p = new Products();
+
+        p.setId(id.getId());
+        p.setName(name.getName());
+        p.setPrice(price.getPrice());
+        p.setQuantity(quantity.getQuantity());
+        p.setSku(sku.getSku());
+
     }
 }
