@@ -1,0 +1,4 @@
+2026/06/11-11:39:24.656 514 Creating DB C:\Users\Notebook\OneDrive\Documentos\GitHub\poo-P2\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Sync Data\LevelDB since it was missing.
+2026/06/11-11:39:24.676 514 Reusing MANIFEST C:\Users\Notebook\OneDrive\Documentos\GitHub\poo-P2\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Sync Data\LevelDB/MANIFEST-000001
+2026/06/11-11:39:24.677 514 Recovering log #3
+2026/06/11-11:39:24.677 514 Reusing old log C:\Users\Notebook\OneDrive\Documentos\GitHub\poo-P2\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Sync Data\LevelDB/000003.log 
