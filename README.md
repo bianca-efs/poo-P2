@@ -41,7 +41,7 @@ CREATE TABLE cliente (
 CREATE TABLE fornecedor (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    cnpj VARCHAR(18) NOT NULL UNIQUE,
+    cnpj VARCHAR(14) NOT NULL,
     email VARCHAR(100) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
     data_contrato DATE NOT NULL,
@@ -61,10 +61,12 @@ CREATE TABLE funcionario (
 
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    sku VARCHAR(50) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
+    price DOUBLE NOT NULL,
     quantity INT NOT NULL,
-    sku VARCHAR(50) NOT NULL UNIQUE
+    description VARCHAR(255) NOT NULL,
+    categoria VARCHAR(100) NOT NULL
 );"
 
 )
@@ -95,4 +97,4 @@ Victor Souza Perez:
 * Testes de interface, validações e correção de erros.
 
 Link para o vídeo no YouTube:
-!!!inserir link
+https://youtu.be/lNm-N-EXVsk

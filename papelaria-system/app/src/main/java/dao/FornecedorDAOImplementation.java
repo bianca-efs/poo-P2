@@ -29,7 +29,7 @@ public class FornecedorDAOImplementation implements FornecedorDAO{
 	@Override
 	public void cadastrar(Fornecedor fr) {
 		try {
-			String sql = "INSERT INTO fornecedor (nome, cnpj, email, telefone, dataContrato, endereco) VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO fornecedor (nome, cnpj, email, telefone, data_contrato, endereco) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement stm = con.prepareStatement(sql);
 			
 			stm.setString(1, fr.getNome());
@@ -60,7 +60,7 @@ public class FornecedorDAOImplementation implements FornecedorDAO{
 	@Override
 	public void atualizar(int id, Fornecedor fr) {
 		try {
-            String sql = "UPDATE fornecedor SET nome=?, cnpj=?, email=?, telefone=?, dataContrato=?, endereco=? WHERE id=?";
+            String sql = "UPDATE fornecedor SET nome=?, cnpj=?, email=?, telefone=?, data_contrato=?, endereco=? WHERE id=?";
             PreparedStatement stm = con.prepareStatement(sql);
 
             stm.setString(1, fr.getNome());
