@@ -6,8 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class MenuBoundary implements Tela{
+public class MenuBoundary implements Tela {
     private Stage stage;
+
     public MenuBoundary(Stage stage) {
         this.stage = stage;
     }
@@ -28,7 +29,7 @@ public class MenuBoundary implements Tela{
             FuncionarioBoundary fb = new FuncionarioBoundary(stage);
             stage.setScene(new Scene(fb.render(), 900, 600));
         });
-        
+
         btnCliente.setOnAction(e -> {
             ClienteBoundary cb = new ClienteBoundary(stage);
             stage.setScene(new Scene(cb.render(), 900, 600));
@@ -39,21 +40,26 @@ public class MenuBoundary implements Tela{
             stage.setScene(new Scene(frb.render(), 900, 600));
         });
 
+        btnProduto.setOnAction(e -> {
+            ProductsBoundary pt = new ProductsBoundary(stage);
+            stage.setScene(new Scene(pt.render(), 900, 600));
+        });
+
         grid.add(btnFuncionario, 0, 0);
         grid.add(btnProduto, 1, 0);
         grid.add(btnCliente, 0, 1);
         grid.add(btnFornecedor, 1, 1);
-        
+
         btnFuncionario.setPrefSize(220, 120);
         btnProduto.setPrefSize(220, 120);
         btnCliente.setPrefSize(220, 120);
         btnFornecedor.setPrefSize(220, 120);
-        
+
         btnFuncionario.setStyle("-fx-font-size: 16px;");
         btnProduto.setStyle("-fx-font-size: 16px;");
         btnFornecedor.setStyle("-fx-font-size: 16px;");
         btnCliente.setStyle("-fx-font-size: 16px;");
-        
+
         grid.setAlignment(javafx.geometry.Pos.CENTER);
 
         return grid;
