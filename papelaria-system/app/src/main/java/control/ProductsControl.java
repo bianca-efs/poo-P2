@@ -1,4 +1,4 @@
-package control;
+/*package control;
 
 import java.sql.SQLException;
 
@@ -55,4 +55,4 @@ public class ProductsControl {
         p.setSku(sku.getSku());
 
     }
-}
+}*/

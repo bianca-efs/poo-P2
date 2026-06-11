@@ -12,7 +12,7 @@ import entity.Cliente;
 
 public class ClienteDAOImplementation implements ClienteDAO {
 
-	private static final String DB_URI = "jdbc:mysql://localhost:3306/papelaria?useSSL=false&serverTimezone=UTC";
+	private static final String DB_URI = "jdbc:mysql://localhost:3306/papelaria?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     private static final String DB_USER = "root";
     private static final String DB_PASS = "1234";
     private Connection con;

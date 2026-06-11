@@ -12,7 +12,7 @@ import java.util.List;
 import entity.Funcionario;
 
 public class FuncionarioDAOImplementation implements FuncionarioDAO {
-    private static final String DB_URI = "jdbc:mysql://localhost:3306/papelaria?useSSL=false&serverTimezone=UTC";
+    private static final String DB_URI = "jdbc:mysql://localhost:3306/papelaria?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
     private static final String DB_USER = "root";
     private static final String DB_PASS = "1234";
@@ -23,11 +23,9 @@ public class FuncionarioDAOImplementation implements FuncionarioDAO {
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver carregado...");
             con = DriverManager.getConnection(DB_URI, DB_USER, DB_PASS);
-        } catch (ClassNotFoundException e) { 
+        } catch (ClassNotFoundException | SQLException e) { 
             e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } 
     }
 
     @Override
@@ -46,7 +44,6 @@ public class FuncionarioDAOImplementation implements FuncionarioDAO {
             stm.setDate(7, java.sql.Date.valueOf(f.getDataContrato()));
 
             stm.executeUpdate();
-            System.out.println("Funcionário inserido com sucesso");
         } catch (SQLException e) {
             e.printStackTrace();
         }
