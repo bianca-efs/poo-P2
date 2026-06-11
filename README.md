@@ -23,7 +23,51 @@ Instruções para execução:
 * Instalar e configurar o MySQL Server (MySQL 9.7 Command Line Client).
 * Criar o banco de dados denominado "papelaria".
 * Configurar o usuário e a senha do banco de dados conforme definidos nas classes DAO do projeto.
-* Executar os scripts de criação das tabelas.
+* Executar os scripts de criação das tabelas: (
+
+"CREATE DATABASE papelaria;
+USE papelaria;
+
+CREATE TABLE cliente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    data_nascimento DATE NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    data_cadastro DATE NOT NULL
+);
+
+CREATE TABLE fornecedor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cnpj VARCHAR(18) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    data_contrato DATE NOT NULL,
+    endereco VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE funcionario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    salario DECIMAL(10,2) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    data_contrato DATE NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    cargo VARCHAR(100) NOT NULL,
+    setor VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    quantity INT NOT NULL,
+    sku VARCHAR(50) NOT NULL UNIQUE
+);"
+
+)
 * Realizar o clone do repositório utilizando o comando git clone.
 * Entrar na pasta do projeto via Prompt de Comando (CMD) e executar o comando: gradle run.
 * Utilizar o menu principal para acessar as funcionalidades do sistema.
